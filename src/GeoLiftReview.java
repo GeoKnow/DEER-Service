@@ -1,14 +1,14 @@
+import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.RDFReader;
-
 import com.google.gson.Gson;
 
 /**
@@ -27,21 +27,8 @@ public class GeoLiftReview extends HttpServlet {
 	   
 
 	   public void init( ){
-	      filePath = getServletContext().getRealPath("/");
-	      // Replace backslashes with forward slashes - remove for Linux???
-	      filePath = filePath.replace("\\", "/");
-	      //System.out.println(filePath);
+		   filePath = getServletContext().getRealPath(File.separator);
 	   }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-		out.println("<HTML><HEAD><TITLE>Hello World!</TITLE>"
-		+ "</HEAD><BODY>Hello Reviewer!!!</BODY></HTML>");
-	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

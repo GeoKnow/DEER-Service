@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.aksw.geolift.operators.*;
 import org.aksw.geolift.workflow.GeoLift;
 
 /**
@@ -26,15 +25,13 @@ public class GeoLiftRun extends HttpServlet {
 	static String outputFile;
 
 	   public void init( ){
-	      filePath = getServletContext().getRealPath("/");
-	      // Replace backslashes with forward slashes - remove for Linux???
-	      filePath = filePath.replace("\\", "/");
+		  filePath = getServletContext().getRealPath(File.separator);
 	      configFile = filePath+"config/config.tsv";
 	      outputFile = filePath+"result/result.ttl";
 	      args[0] = "-i";
 	  	  args[2] = "-c";
 	      args[3] = configFile;
-	      args[4] = "-0";
+	      args[4] = "-o";
 	      args[5] = outputFile;
 	   }
 
@@ -47,6 +44,7 @@ public class GeoLiftRun extends HttpServlet {
 		out.println("<HTML><HEAD><TITLE>Hello World!</TITLE>"
 		+ "</HEAD><BODY>Hello World!!!</BODY></HTML>");
 	}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -62,7 +60,12 @@ public class GeoLiftRun extends HttpServlet {
     	}
     	
     	String input = request.getParameter("1");
-    	args[1] = input;
+    	
+    	if(request.getParameter("isCompletePath") == "0"){
+    		args[1] = filePath+"examples"+File.separator+input;
+    	}else{
+    		args[1] = input;
+    	}
     	
     	try {
  
@@ -87,11 +90,12 @@ public class GeoLiftRun extends HttpServlet {
 		}
     	
     	ExecuteGeoLift(args);
-    	
+    	response.getWriter().write("Finished!");
     }
     
     // Start GeoLift with the configfile
  	public static void ExecuteGeoLift(String args[]) throws IOException{
+ 		//System.out.println(args[1]);
  		GeoLift.main(args);
  	}
 

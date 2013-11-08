@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,7 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.aksw.geolift.workflow.*;
+//import org.aksw.geolift.workflow.*;
+
 
 import com.google.gson.Gson;
 
@@ -33,12 +35,12 @@ public class LoadFile extends HttpServlet {
 	 */
     @SuppressWarnings("static-access")
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	 String filePath = request.getSession().getServletContext().getRealPath("/");
-    	 filePath = filePath.replace("GeoLiftServlet\\", "");
-    	 configFile = filePath+"generator\\uploads\\"+request.getParameter("configFile");
-    	 configFile = configFile.replace("\\", "/");
-    	 dataFile[0] = filePath+"generator\\uploads\\"+request.getParameter("dataFile");
-    	 dataFile[0] = dataFile[0].replace("\\", "/");
+    	 String filePath = getServletContext().getRealPath(File.separator);
+    	 filePath = filePath.replace("GeoLift-Service"+File.separator, "");
+    	 configFile = filePath+"generator"+File.separator+"uploads"+File.separator+request.getParameter("configFile");
+    	 //configFile = configFile.replace("\\", "/");
+    	 dataFile[0] = filePath+"generator"+File.separator+"uploads"+File.separator+request.getParameter("dataFile");
+    	 //dataFile[0] = dataFile[0].replace("\\", "/");
     	 configList.clear();
     	 config.clear();
     	 config.add(dataFile);
