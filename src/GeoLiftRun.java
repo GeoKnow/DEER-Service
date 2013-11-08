@@ -52,16 +52,19 @@ public class GeoLiftRun extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
     	String strlen = request.getParameter("0");
-    	int length = (Integer.parseInt(strlen)+2);
+    	int length = (Integer.parseInt(strlen)+3);
+    	
     	String [] params = new String[length];
     	
-    	for(int i=2; i<length; i++){
-	    	params[i-2] = request.getParameter(Integer.toString(i));
+    	for(int i=3; i<length; i++){
+	    	params[i-3] = request.getParameter(Integer.toString(i));
+	    	System.out.println(params[i-3]);
     	}
     	
     	String input = request.getParameter("1");
+    	int isCompletePath = Integer.parseInt(request.getParameter("2"));
     	
-    	if(request.getParameter("isCompletePath") == "0"){
+    	if(isCompletePath == 0){
     		args[1] = filePath+"examples"+File.separator+input;
     	}else{
     		args[1] = input;
@@ -78,7 +81,7 @@ public class GeoLiftRun extends HttpServlet {
 			FileWriter fw = new FileWriter(file.getAbsoluteFile());
 			BufferedWriter bw = new BufferedWriter(fw);
 			
-			for(int i=0; i<length-2; i++){
+			for(int i=0; i<length-3; i++){
 		    		String line = params[i];
 		    		bw.write(line);
 		        	bw.newLine();
@@ -95,7 +98,7 @@ public class GeoLiftRun extends HttpServlet {
     
     // Start GeoLift with the configfile
  	public static void ExecuteGeoLift(String args[]) throws IOException{
- 		//System.out.println(args[1]);
+ 		System.out.println(args[1]);
  		GeoLift.main(args);
  	}
 
