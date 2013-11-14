@@ -18,6 +18,7 @@ import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.RDFReader;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
@@ -30,15 +31,12 @@ public class ImportRDF extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String rdfUrl;
-	private String rdfFiles;
+	private String rdfFile;
 	private String endpoint;
 	private static String uriBase;
 	private String graph;
 	private String rdfQuery;
 	private String rdfQueryEndpoint;
-	private static String jdbcConnection;
-	private static String jdbcUser;
-	private static String jdbcPassword;
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 	      doPost(request, response);
@@ -51,32 +49,34 @@ public class ImportRDF extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		// get the paht where files were uploaded 
-		String filePath = getServletContext().getRealPath("/") + getServletContext().getInitParameter("file-upload").replaceFirst(File.separator,""); 
+		String filePath = getServletContext().getRealPath(File.separator);
 		JsonResponse res = new JsonResponse();
 	    ObjectMapper mapper = new ObjectMapper();
 	    
 	    uriBase   = request.getParameter("uriBase");
-		rdfUrl   = request.getParameter("rdfUrl");
+		//rdfUrl   = request.getParameter("rdfUrl");
 		endpoint = request.getParameter("endpoint");
 	    graph    = request.getParameter("graph");
-	    rdfFiles = request.getParameter("rdfFiles");
-	    rdfQuery    = request.getParameter("rdfQuery");
-	    rdfQueryEndpoint = request.getParameter("rdfQueryEndpoint");
+	    rdfFile = request.getParameter("rdfFile");
+	    //rdfQuery    = request.getParameter("rdfQuery");
+	    //rdfQueryEndpoint = request.getParameter("rdfQueryEndpoint");
 	    
-    	String source = ((rdfFiles == null) ? rdfUrl : filePath+rdfFiles);
+    	String source = ((rdfFile == null) ? rdfUrl : filePath+"result"+File.separator+rdfFile);
     	try {
     		if(source != null){
-    			String file = source;
- 				System.out.println("import    " +file);
+    			source = "file:///"+source.replace("\\", "/");
+ 				System.out.println("import    " +source);
  				Model model = ModelFactory.createDefaultModel() ; 
- 				model.read(source) ;
+ 				RDFReader reader = model.getReader("N3");
+ 				reader.read(model, source);
+ 				System.out.println(model.toString());
  				int inserted = httpUpdate(endpoint, graph, model);
  				res.setStatus("SUCESS");
  				res.setMessage("Data Imported "+ inserted+ " triples");
     		}	  
  			else{
  		 	  	int inserted = queryImport(endpoint, graph, rdfQueryEndpoint, rdfQuery);
- 		 	   	res.setStatus("ßSUCESS");
+ 		 	   	res.setStatus("SUCCESS");
  		 	   	res.setMessage("Data Imported "+ inserted + " triples");
  		 	}
  		} catch (Exception e) {
