@@ -44,7 +44,7 @@ public class GeoLiftReview extends HttpServlet {
 	   	 
 	   	 //mod0.add(mod1);
 	   	 String[] modArray = new String[2];
-	   	 modArray[0] = mod0.toString();
+	   	 modArray[0] = model.write(System.out, "TTL");
 	     
 	     Gson gson = new Gson();
 	     String json = gson.toJson(modArray);
