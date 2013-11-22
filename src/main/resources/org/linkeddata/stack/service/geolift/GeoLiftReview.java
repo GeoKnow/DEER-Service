@@ -1,3 +1,5 @@
+package org.linkeddata.stack.service.geolift;
+
 import java.io.File;
 import java.io.IOException;
 

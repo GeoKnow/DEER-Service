@@ -11,7 +11,7 @@
   </welcome-file-list>
   <servlet>
     <servlet-name>GeoLift-Service</servlet-name>
-    <servlet-class>GeoLiftRun</servlet-class>
+    <servlet-class>org.linkeddata.stack.service.geolift.GeoLiftRun</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>GeoLift-Service</servlet-name>
@@ -19,15 +19,19 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>GeoLiftRun</servlet-name>
-    <servlet-class>GeoLiftRun</servlet-class>
+    <servlet-class>org.linkeddata.stack.service.geolift.GeoLiftRun</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>GeoLiftReview</servlet-name>
-    <servlet-class>GeoLiftReview</servlet-class>
+    <servlet-class>org.linkeddata.stack.service.geolift.GeoLiftReview</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>LoadFile</servlet-name>
-    <servlet-class>LoadFile</servlet-class>
+    <servlet-class>org.linkeddata.stack.service.geolift.LoadFile</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ImportRDF</servlet-name>
+    <servlet-class>org.linkeddata.stack.service.geolift.ImportRDF</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>GeoLiftRun</servlet-name>
@@ -40,5 +44,9 @@
   <servlet-mapping>
     <servlet-name>LoadFile</servlet-name>
     <url-pattern>/LoadFile</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ImportRDF</servlet-name>
+    <url-pattern>/ImportRDF</url-pattern>
   </servlet-mapping>
 </web-app>

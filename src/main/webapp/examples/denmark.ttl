@@ -1,0 +1,93 @@
+@prefix prv:     <http://purl.org/net/provenance/ns#> .
+@prefix dc:      <http://purl.org/dc/terms/> .
+@prefix eurostat:  <http://wifo5-04.informatik.uni-mannheim.de/eurostat/resource/eurostat/> .
+@prefix db:      <http://wifo5-04.informatik.uni-mannheim.de/eurostat/resource/> .
+@prefix sp:      <http://spinrdf.org/sp#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix xhtml:   <http://www.w3.org/1999/xhtml/vocab/#> .
+@prefix void:    <http://rdfs.org/ns/void#> .
+@prefix d2rq:    <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix prvTypes:  <http://purl.org/net/provenance/types#> .
+@prefix d2r:     <http://sites.wiwiss.fu-berlin.de/suhl/bizer/d2r-server/config.rdf#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix map:     <file:/C:/apps/eurostat/eurostat.n3#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix doap:    <http://usefulinc.com/ns/doap#> .
+
+<http://wifo5-04.informatik.uni-mannheim.de/eurostat/resource/regions/Danmark>
+      eurostat:parentcountry
+              <http://wifo5-04.informatik.uni-mannheim.de/eurostat/resource/countries/Danmark> .
+<http://wifo5-04.informatik.uni-mannheim.de/eurostat/resource/regions/Danmark>
+	rdfs:seeAlso <http://dbpedia.org/resource/Copenhagen> .
+<http://wifo5-04.informatik.uni-mannheim.de/eurostat/resource/countries/Danmark>
+      a       eurostat:countries ;
+      rdfs:isDefinedBy <http://wifo5-04.informatik.uni-mannheim.de/eurostat/data/countries/Danmark> ;
+      rdfs:label "Danmark" ;
+      eurostat:GDP 196158.4E0 ;
+      eurostat:GDP_current_prices
+              55288.2E0 ;
+      eurostat:GDP_per_capita_PPP
+              120.1E0 ;
+      eurostat:RnD_exp_mio_euro
+              5096.769E0 ;
+      eurostat:RnD_personel_percent_of_act_pop
+              2.28E0 ;
+      eurostat:average_exit_age_from_laborforce
+              67.1E0 ;
+      eurostat:comparative_price_levels
+              138.3E0 ;
+      eurostat:disposable_income
+              16491.2E0 ;
+      eurostat:electricity_consumption_GWh
+              32552.0E0 ;
+      eurostat:electricity_production_capacity_MWh
+              10713.0E0 ;
+      eurostat:employment_rate_total
+              77.4E0 ;
+      eurostat:fertility_rate_total
+              18.6E0 ;
+      eurostat:geocode "dk" ;
+      eurostat:hospital_beds_per100000hab
+              382.5E0 ;
+      eurostat:inflation_rate
+              1.9E0 ;
+      eurostat:injured_in_road_accidents
+              7546.0E0 ;
+      eurostat:killed_in_road_accidents
+              369.0E0 ;
+      eurostat:landuse_total
+              43098.0E0 ;
+      eurostat:level_of_internet_access
+              "79"^^xsd:long ;
+      eurostat:level_of_internetaccess_households
+              "79"^^xsd:long ;
+      eurostat:marriages 6.67E0 ;
+      eurostat:name "Danmark" ;
+      eurostat:name_encoded
+              "Danmark" ;
+      eurostat:population_female
+              "2734113"^^xsd:long ;
+      eurostat:population_male
+              "2677292"^^xsd:long ;
+      eurostat:population_total
+              "5411405"^^xsd:long ;
+      eurostat:pupils_and_students
+              1127.3E0 ;
+      eurostat:total_area_km2
+              43098.0E0 ;
+      eurostat:total_average_population
+              5404.5E0 ;
+      eurostat:unemployment_rate_total
+              3.9E0 ;
+      owl:sameAs <http://ec.europa.eu/eurostat/ramon/rdfdata/countries/DK> , <http://dbpedia.org/resource/Denmark> , <http://estatwrap.ontologycentral.com/dic/geo#DK> ;
+      foaf:page <http://wifo5-04.informatik.uni-mannheim.de/eurostat/page/countries/Danmark> .
+      	
+<http://wifo5-04.informatik.uni-mannheim.de/eurostat/data/countries/Danmark>
+      a       foaf:Document , prv:DataItem ;
+      rdfs:label "RDF Description of Danmark" ;
+      dc:date "2013-10-10T18:50:18.336Z"^^xsd:dateTime ;
+      prv:containedBy <http://wifo5-04.informatik.uni-mannheim.de/eurostat/dataset> ;
+      void:inDataset <http://wifo5-04.informatik.uni-mannheim.de/eurostat/dataset> ;
+      foaf:primaryTopic <http://wifo5-04.informatik.uni-mannheim.de/eurostat/resource/countries/Danmark> .
