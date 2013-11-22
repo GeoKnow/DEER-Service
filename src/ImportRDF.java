@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.codehaus.jackson.map.*;
 
+import org.aksw.geolift.io.Reader;
+
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
@@ -22,6 +24,7 @@ import com.hp.hpl.jena.rdf.model.RDFReader;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
+import com.hp.hpl.jena.util.FileManager;
 
 
 public class ImportRDF extends HttpServlet {
@@ -66,9 +69,16 @@ public class ImportRDF extends HttpServlet {
     		if(source != null){
     			source = "file:///"+source.replace("\\", "/");
  				System.out.println("import    " +source);
- 				Model model = ModelFactory.createDefaultModel() ; 
+ 				/*
+ 				Model model = ModelFactory.createDefaultModel(); 
  				RDFReader reader = model.getReader("N3");
  				reader.read(model, source);
+ 				System.out.println(model.toString());
+ 				int inserted = httpUpdate(endpoint, graph, model);
+ 				res.setStatus("SUCESS");
+ 				res.setMessage("Data Imported "+ inserted+ " triples");
+ 				*/
+ 				Model model = Reader.readModel(source);
  				System.out.println(model.toString());
  				int inserted = httpUpdate(endpoint, graph, model);
  				res.setStatus("SUCESS");
@@ -107,7 +117,7 @@ public class ImportRDF extends HttpServlet {
 		
 		// generate queries of 100 lines each
 		StmtIterator stmts = model.listStatements();
-		int linesLimit=100, linesCount=0, total=0;
+		int linesLimit=50, linesCount=0, total=0;
 		HashMap<String, String> blancNodes = new HashMap<String,String>();
 		
 		Model tmpModel = ModelFactory.createDefaultModel();
@@ -157,6 +167,7 @@ public class ImportRDF extends HttpServlet {
 				ByteArrayOutputStream os = new ByteArrayOutputStream();
 				tmpModel.write(os, "N-TRIPLES");
 				String queryString = "INSERT {  " + os.toString() + "}";
+				System.out.println(queryString);
 				os.close();
 				
 				HttpSPARQLUpdate p = new HttpSPARQLUpdate();
