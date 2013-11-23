@@ -48,10 +48,11 @@ POST a params array to /GeoLiftRun
 
 	params[0] = number of configuration settings for Geolift (sum of params [3...*])
 	params[1] = name of file / URI to process
-	params[2] = 0 : file / 1 : URI
+	params[2] = 0 (file job) / 1 (URI job)
 	params[3...*] = parameters, eg: "1 nlp useFoxLight true"
 	
-The enriched data is saved to webapps/result/result.ttl.
+The enriched data is saved to webapps/result/result.ttl. To run this class without the GeoKnow Generator,
+set params[1] = name of file, params[2] = 0, and put the file from params[1] in the examples folder.
 	
 ####Open the output from the enrichment process
 
