@@ -16,9 +16,9 @@ or to redeploy:
 	
 The Geolift-Service webapp folder should have the following subdirectories:
 
-	\config
-	\result
-	\examples
+	/config
+	/result
+	/examples
 
 ##HTTP Calls
 
@@ -38,7 +38,7 @@ This will save a config.tsv file to webapps/config and return the settings from 
 This class will read the files from the GeoKnow Generator (https://github.com/GeoKnow/GeoKnowGeneratorUI) upload 
 folder, which should be in the same Tomcat server:
 
-	\webapps\generator\uploads
+	/webapps/generator/uploads
 	
 If a different behaviour is desired this class must be edited.
 				 	
@@ -60,7 +60,7 @@ POST a params array to /GeoLiftReview
 
 	No parameters necessary
 	
-Opens the webapps/result/result.ttl file and returns the model.
+Opens the /result/result.ttl file and returns the model.
 	
 ####Save the output to a SPARQL endpoint
 	
