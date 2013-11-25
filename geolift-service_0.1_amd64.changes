@@ -1,0 +1,37 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Format: 1.8
+Date: Wed, 21 Aug 2013 15:01:15 +0200
+Source: geolift-service
+Binary: geolift-service
+Architecture: all
+Version: 0.1
+Distribution: ldstack-nightly
+Urgency: low
+Maintainer: Vadim Zaslawski <vadim.zaslawski@ontos.com>
+Changed-By: Vadim Zaslawski <vadim.zaslawski@ontos.com>
+Description: 
+ geolift-service - Web service for GeoLift.
+Changes: 
+ geolift-service (0.1) ldstack-nightly; urgency=low
+ .
+   * Initial Release.
+Checksums-Sha1: 
+ 2ad35b08f7387b1355a73fe7876887fb495ec229 24789974 geolift-service_0.1_all.deb
+Checksums-Sha256: 
+ a4f0801ad5977c13d030a6fbfb092c35fba0118c7ac1bb7e636973aaa4122817 24789974 geolift-service_0.1_all.deb
+Files: 
+ f2f8faef7fc06e04f2f4dce88aa94f0f 24789974 web extra geolift-service_0.1_all.deb
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJSks2hAAoJEE40y91kuOF2YnIH/0v7cgYI31O8mT4a/Zkq2TC0
+bCBaRItUMm/Nj3t7pe498cBcwroyei7GoTJehqXJn2BLZNdlLRlIjRYK1wWXhz83
+g46/R6yytDS9z8/AAm7jKl6kW6h4XtO5aW63EZXh197aOiGvdu3WxQ6VHDi0jDPn
+riAWDZQiJkjC8RgaTnUMsZuzoFGGJr+HN5UqOi09bnXL/nr99ygAeBmlei3v9AAj
+3RnrMqNKlOTB8m2P3vKf1aklxrma84iKJ4onjnmOTXD6SQhRaD2OIQx43YBCxqLG
+Rd9Dvf0CsMSfT+od3/QhmdNFVtZWNTkgzxRkuIwuWHdcqBwCF+rGpxjoAL6jrU4=
+=W2Wt
+-----END PGP SIGNATURE-----
