@@ -1,17 +1,26 @@
 package org.linkeddata.stack.service.geolift;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.aksw.geolift.io.Reader;
 import org.aksw.geolift.workflow.GeoLift;
+import org.aksw.geolift.workflow.TSVConfigReader;
+
+import com.google.common.collect.Multimap;
+import com.hp.hpl.jena.rdf.model.Model;
 
 /**
  * Servlet implementation class TripleGeoRun
@@ -26,7 +35,7 @@ public class GeoLiftRun extends HttpServlet {
 	static String configFile;
 	static String outputFile;
 
-	   public void init( ){
+	public void init( ){
 		  filePath = getServletContext().getRealPath(File.separator);
 	      configFile = filePath+"config/config.tsv";
 	      outputFile = filePath+"result/result.ttl";
@@ -60,7 +69,7 @@ public class GeoLiftRun extends HttpServlet {
     	
     	for(int i=3; i<length; i++){
 	    	params[i-3] = request.getParameter(Integer.toString(i));
-	    	System.out.println(params[i-3]);
+	    	//System.out.println(params[i-3]);
     	}
     	
     	String input = request.getParameter("1");
@@ -71,7 +80,7 @@ public class GeoLiftRun extends HttpServlet {
     	}else{
     		args[1] = input;
     	}
-    	
+        
     	try {
  
 			File file = new File(configFile);
@@ -100,8 +109,25 @@ public class GeoLiftRun extends HttpServlet {
     
     // Start GeoLift with the configfile
  	public static void ExecuteGeoLift(String args[]) throws IOException{
- 		System.out.println(args[1]);
- 		GeoLift.main(args);
+ 		for (int i=0;i<args.length;i++){
+ 		System.out.println(args[i]);
+ 		}
+ 		Process proc = Runtime.getRuntime().exec("java -jar "+filePath+"WEB-INF"+File.separator+
+ 				"lib"+File.separator+"geolift-0.2.jar -i "+args[1]+" -c "+args[3]+" -o "
+ 				+args[5]);
+	 	InputStream in = proc.getInputStream();
+	 	InputStream err = proc.getErrorStream();
+	 	String line;
+	 	BufferedReader input = new BufferedReader(new InputStreamReader(in));
+	 	  while ((line = input.readLine()) != null) {
+	 	    System.out.println(line);
+	 	  }
+	 	input = new BufferedReader(new InputStreamReader(err));
+	 	  while ((line = input.readLine()) != null) {
+	 	    System.out.println(line);
+	 	  }
+	 	input.close();
+ 		//GeoLift.main(args);
  	}
 
 }
