@@ -81,7 +81,8 @@ public class GeoLiftRun extends HttpServlet {
     	}
     	if(isCompletePath == 1){
     		args[1] = input;
-    	}else{
+    	}
+    	if(isCompletePath == 2){
     		String uploadFilePath = filePath.replace("Geolift-Service"+File.separator, "");
     		args[1] = uploadFilePath+"generator"+File.separator+"uploads"+File.separator+input;
     	}
