@@ -38,7 +38,7 @@ public class LoadFile extends HttpServlet {
     @SuppressWarnings("static-access")
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	 String filePath = getServletContext().getRealPath(File.separator);
-    	 filePath = filePath.replace("GeoLift-Service"+File.separator, "");
+    	 filePath = filePath.replace("Geolift-Service"+File.separator, "");
     	 configFile = filePath+"generator"+File.separator+"uploads"+File.separator+request.getParameter("configFile");
     	 //configFile = configFile.replace("\\", "/");
     	 dataFile[0] = filePath+"generator"+File.separator+"uploads"+File.separator+request.getParameter("dataFile");
@@ -73,7 +73,7 @@ public class LoadFile extends HttpServlet {
 			
 			for(int i=0; i<configList.size(); i++){
 					String[]line = new String[2];
-					String[]parts = configList.get(i).split(" ", 2);
+					String[]parts = configList.get(i).split(" ");
 					config.add(parts);
 			}
 			

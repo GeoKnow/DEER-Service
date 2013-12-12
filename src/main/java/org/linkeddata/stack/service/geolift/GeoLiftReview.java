@@ -1,7 +1,9 @@
 package org.linkeddata.stack.service.geolift;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -42,9 +44,11 @@ public class GeoLiftReview extends HttpServlet {
 	   	 RDFReader r0 = mod0.getReader( "N3" );
 	   	 r0.read( mod0, "file:///"+filePath+"result/result.ttl" );
 	   	 
-	   	 //mod0.add(mod1);
 	   	 String[] modArray = new String[2];
-	   	 modArray[0] = mod0.toString();
+	   	 
+	   	 ByteArrayOutputStream os = new ByteArrayOutputStream();
+	   	 mod0.write(os);
+	   	 modArray[0] = os.toString("UTF-8");
 	     
 	     Gson gson = new Gson();
 	     String json = gson.toJson(modArray);
