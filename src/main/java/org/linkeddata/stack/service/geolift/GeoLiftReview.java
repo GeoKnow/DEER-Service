@@ -47,6 +47,7 @@ public class GeoLiftReview extends HttpServlet {
 	   	 ByteArrayOutputStream os = new ByteArrayOutputStream();
 	   	 mod0.write(os);
 	   	 modArray[0] = os.toString("UTF-8");
+	   	 modArray[1] = "file:///"+filePath+"result/result.ttl";
 	     
 	     Gson gson = new Gson();
 	     String json = gson.toJson(modArray);
