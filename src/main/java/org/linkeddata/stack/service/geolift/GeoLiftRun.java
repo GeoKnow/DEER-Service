@@ -37,8 +37,8 @@ public class GeoLiftRun extends HttpServlet {
 
 	public void init( ){
 		  filePath = getServletContext().getRealPath(File.separator);
-	      configFile = filePath+"config/config.tsv";
-	      outputFile = filePath+"result/result.ttl";
+	      configFile = filePath+"config"+File.separator+"config.tsv";
+	      outputFile = filePath+"result"+File.separator+"result.ttl";
 	      args[0] = "-i";
 	  	  args[2] = "-c";
 	      args[3] = configFile;
@@ -118,8 +118,8 @@ public class GeoLiftRun extends HttpServlet {
  		for (int i=0;i<args.length;i++){
  		System.out.println(args[i]);
  		}
- 		System.out.println("java -jar "+filePath+"WEB-INF"+File.separator+
- 				"lib"+File.separator+"geolift-0.2.jar -i "+args[1]+" -c "+args[3]+" -o "
+ 		System.out.println("java -jar \""+filePath+"WEB-INF"+File.separator+
+ 				"lib"+File.separator+"geolift-0.2.jar\" -i "+args[1]+" -c "+args[3]+" -o "
  				+args[5]);
  		Process proc = Runtime.getRuntime().exec("java -jar "+filePath+"WEB-INF"+File.separator+
  				"lib"+File.separator+"geolift-0.2.jar -i "+args[1]+" -c "+args[3]+" -o "
