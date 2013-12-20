@@ -4,6 +4,8 @@ A web service for GeoLift
 
 ##Building
 
+Testing in Tomcat7
+
 To deploy the service to your Tomcat server run:
 
 	mvn tomcat:deploy
