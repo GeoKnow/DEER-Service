@@ -59,9 +59,7 @@ set params[1] = name of file, params[2] = 0, and put the file from params[1] in 
 
 POST a params array to /GeoLiftReview
 
-	No parameters necessary
-	
-Opens the /result/result.ttl file and returns the model.
+No parameters necessary, the class will automatically open the file in the webapp/results folder created by GeoLiftRun and return the model.
 	
 ####Save the output to a SPARQL endpoint
 	
