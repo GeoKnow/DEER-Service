@@ -35,14 +35,13 @@ POST a params array to /Loadfile
 					dataFile: name of data file
 				 	}
 				 	
-This will save a config.tsv file to webapps/config and return the settings from the file.
+This will save a config.tsv file to webapp/config and return the settings from the file.
 
 This class will read the files from the GeoKnow Generator (https://github.com/GeoKnow/GeoKnowGeneratorUI) upload 
 folder, which should be in the same Tomcat server:
 
 	/webapps/generator/uploads
 	
-If a different behaviour is desired this class must be edited.
 				 	
 ####Start the enrichment process
 
