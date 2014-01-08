@@ -73,7 +73,7 @@ public class GeoLiftRun extends HttpServlet {
     	}
     	
     	String input = request.getParameter("1");
-    	System.out.println(input);
+    	//System.out.println(input);
     	int isCompletePath = Integer.parseInt(request.getParameter("2"));
     	
     	if(isCompletePath == 0){
@@ -83,10 +83,10 @@ public class GeoLiftRun extends HttpServlet {
     		args[1] = input;
     	}
     	if(isCompletePath == 2){
-    		String uploadFilePath = filePath.replace("Geolift-Service"+File.separator, "");
+    		String uploadFilePath = filePath.replace("GeoLift-Service"+File.separator, "");
     		args[1] = uploadFilePath+"generator"+File.separator+"uploads"+File.separator+input;
     	}
-        
+    	
     	try {
  
 			File file = new File(configFile);
