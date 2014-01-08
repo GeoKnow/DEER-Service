@@ -4,6 +4,8 @@ A web service for GeoLift
 
 ##Building
 
+Tested in Tomcat7
+
 To deploy the service to your Tomcat server run:
 
 	mvn tomcat:deploy
@@ -33,14 +35,13 @@ POST a params array to /Loadfile
 					dataFile: name of data file
 				 	}
 				 	
-This will save a config.tsv file to webapps/config and return the settings from the file.
+This will save a config.tsv file to webapp/config and return the settings from the file.
 
 This class will read the files from the GeoKnow Generator (https://github.com/GeoKnow/GeoKnowGeneratorUI) upload 
 folder, which should be in the same Tomcat server:
 
 	/webapps/generator/uploads
 	
-If a different behaviour is desired this class must be edited.
 				 	
 ####Start the enrichment process
 
@@ -58,9 +59,7 @@ set params[1] = name of file, params[2] = 0, and put the file from params[1] in 
 
 POST a params array to /GeoLiftReview
 
-	No parameters necessary
-	
-Opens the /result/result.ttl file and returns the model.
+No parameters necessary, the class will automatically open the file in the webapp/results folder created by GeoLiftRun and return the model.
 	
 ####Save the output to a SPARQL endpoint
 	
