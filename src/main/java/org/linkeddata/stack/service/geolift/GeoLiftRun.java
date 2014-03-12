@@ -119,10 +119,10 @@ public class GeoLiftRun extends HttpServlet {
  		System.out.println(args[i]);
  		}
  		System.out.println("java -jar \""+filePath+"WEB-INF"+File.separator+
- 				"lib"+File.separator+"geolift-0.3.jar\" -i "+args[1]+" -c "+args[3]+" -o "
+ 				"lib"+File.separator+"geolift-0.4.jar\" -i "+args[1]+" -c "+args[3]+" -o "
  				+args[5]);
  		Process proc = Runtime.getRuntime().exec("java -jar "+filePath+"WEB-INF"+File.separator+
- 				"lib"+File.separator+"geolift-0.3.jar -i "+args[1]+" -c "+args[3]+" -o "
+ 				"lib"+File.separator+"geolift-0.4.jar -i "+args[1]+" -c "+args[3]+" -o "
  				+args[5]);
 	 	InputStream in = proc.getInputStream();
 	 	InputStream err = proc.getErrorStream();
