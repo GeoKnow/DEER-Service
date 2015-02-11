@@ -1,7 +1,6 @@
-#GeoLift-Service
+#DEER-Service
 
-A web service for GeoLift
-
+A web service for [DEER](https://github.com/GeoKnow/DEER)	
 ##Building
 
 Tested in Tomcat7
@@ -16,7 +15,7 @@ or to redeploy:
 	
 ##Directories
 	
-The Geolift-Service webapp folder should have the following subdirectories:
+The Deer-Service webapp folder should have the following subdirectories:
 
 	/config
 	/result
@@ -24,7 +23,7 @@ The Geolift-Service webapp folder should have the following subdirectories:
 
 ##HTTP Calls
 
-###Running Geolift
+###Running DEER
 
 ####Load a configuration file
 
@@ -45,21 +44,20 @@ folder, which should be in the same Tomcat server:
 				 	
 ####Start the enrichment process
 
-POST a params array to /GeoLiftRun
+POST a params array to /run
 
 	params[0] = number of configuration settings for Geolift (sum of params [3...*])
 	params[1] = name of file / URI to process
 	params[2] = 0 (file job) / 1 (URI job)
 	params[3...*] = parameters, eg: "1 nlp useFoxLight true"
 	
-The enriched data is saved to webapps/result/result.ttl. To run this class without the GeoKnow Generator,
-set params[1] = name of file, params[2] = 0, and put the file from params[1] in the examples folder.
+The enriched data is saved to webapps/result/result.ttl. To run this class without the GeoKnow Generator, set params[1] = name of file, params[2] = 0, and put the file from params[1] in the examples folder.
 	
 ####Open the output from the enrichment process
 
-POST a params array to /GeoLiftReview
+POST a params array to /review
 
-No parameters necessary, the class will automatically open the file in the webapp/results folder created by GeoLiftRun and return the model.
+No parameters necessary, the class will automatically open the file in the webapp/results folder created by run and return the model.
 	
 ####Save the output to a SPARQL endpoint
 	

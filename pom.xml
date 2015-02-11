@@ -1,125 +1,177 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>stack.linkeddata.org</groupId>
-  <artifactId>deer-service</artifactId>
-  <version>0.5.0</version>
-  <packaging>war</packaging>
-  <name>deer-service</name>
-  
-  <properties>
-        <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-    
-    <repositories>
-      <repository>
-        <id>ldstack</id>
-        <url>http://mvn.linkeddata.org/content/groups/linkeddata.org/</url>
-      </repository>
-    </repositories> 
-  
-    <dependencies>
-	    <dependency>
-	      <groupId>javax.servlet</groupId>
-	      <artifactId>servlet-api</artifactId>
-	      <version>2.5</version>
-	    </dependency>
-	    <dependency>
-	      <groupId>com.google.code.gson</groupId>
-	      <artifactId>gson</artifactId>
-	      <version>2.2.4</version>
-	    </dependency>
-	    
-	    <dependency>
-        <groupId>com.hp.hpl.jena</groupId>
-        <artifactId>jena</artifactId>
-        <version>2.6.3</version>
-      </dependency>
-      
-      <dependency>
-        <groupId>com.hp.hpl.jena</groupId>
-        <artifactId>arq</artifactId>
-        <version>2.8.5</version>
-      </dependency>
-			
-	  <dependency>
-        <groupId>org.codehaus.jackson</groupId>
-        <artifactId>jackson-core-asl</artifactId>
-        <version>1.9.13</version>
-      </dependency>
-    
-      <dependency>
-        <groupId>org.codehaus.jackson</groupId>
-        <artifactId>jackson-mapper-asl</artifactId>
-        <version>1.9.13</version>
-      </dependency>
-      
-      <dependency>
-		  <groupId>org.aksw</groupId>
-		  <artifactId>geolift</artifactId>
-		  <version>0.4</version>
-	  </dependency>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>stack.linkeddata.org</groupId>
+	<artifactId>deer-service</artifactId>
+	<version>0.5.0</version>
+	<packaging>war</packaging>
+	<name>deer-service</name>
 
-    </dependencies>
-  
-  <build>
-    <finalName>deer-service</finalName>
-    <plugins>
-      <!-- Maven Tomcat Plugin -->
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>tomcat-maven-plugin</artifactId>
-        <configuration>
-	  <url>http://127.0.0.1:8080/manager/text</url>
-	  <server>tomcat</server>
-	  <path>/${project.build.finalName}</path>
-	</configuration>
-      </plugin>
-      <!-- Maven compiler plugin -->
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
-        <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-  
-  <profiles>
-                <profile>
-                        <id>deb-pkg</id>
-                        <build>
-                                <plugins>
-                                        <plugin>
-                                                <groupId>org.apache.maven.plugins</groupId>
-                                                <artifactId>maven-antrun-plugin</artifactId>
-                                                <configuration>
-                                                        <tasks>
-                                                                <echo
-                                                                        message="Creating debian package">
-                                                                </echo>
-                                                                <exec
-                                                                        dir="${basedir}/deb-package"
-                                                                        executable="${basedir}/deb-package/build_debpkg.sh"
-                                                                        failonerror="true">
-                                                                </exec>
-                                                        </tasks>
-                                                </configuration>
-                                                <executions>
-                                                        <execution>
-                                                                <id>deb-pkg</id>
-                                                                <phase>package</phase>
-                                                                <goals>
-                                                                        <goal>run</goal>
-                                                                </goals>
-                                                        </execution>
-                                                </executions>
-                                        </plugin>
-                                </plugins>
-                        </build>
-                </profile>
-        </profiles>
-  
+	<properties>
+		<endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jersey.version>2.12</jersey.version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>ldstack</id>
+			<url>http://mvn.linkeddata.org/content/groups/public/</url>
+		</repository>
+	</repositories>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.glassfish.jersey</groupId>
+				<artifactId>jersey-bom</artifactId>
+				<version>${jersey.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.9</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+
+		<!-- Javax web services with jersey -->
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet</artifactId>
+		</dependency>
+		<!-- <dependency> <groupId>org.glassfish.jersey.media</groupId> <artifactId>jersey-media-json-jackson</artifactId> 
+			</dependency> -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.3.5</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.aksw.geolift.nlp</groupId>
+			<artifactId>deer</artifactId>
+			<version>1.0</version>
+		<!-- 	<exclusions>
+        <exclusion>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.httpcomponents</groupId>
+          <artifactId>httpclient</artifactId>
+        </exclusion>  
+    </exclusions> -->
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<finalName>deer-service</finalName>
+		<plugins>
+		    <!--	<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+						<artifactSet>
+              <excludes>
+                <exclude>org.apache.httpcomponents:httpclient</exclude>
+                <exclude>org.apache.httpcomponents:httpcore</exclude>
+              </excludes>
+            </artifactSet>
+					 <filters>
+								<filter>
+									<artifact>org.aksw.geolift.nlp:deer</artifact>
+									<excludes>
+										<exclude>org/apache/http/**</exclude>
+										<exclude>org/apache/commons/**</exclude>
+										<exclude>com/google/gson/**</exclude>
+									</excludes>
+								</filter>
+							</filters> 
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>-->
+			<!-- Maven Tomcat Plugin -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>tomcat-maven-plugin</artifactId>
+				<configuration>
+					<url>http://127.0.0.1:8080/manager/text</url>
+					<server>tomcat</server>
+					<path>/${project.build.finalName}</path>
+				</configuration>
+			</plugin>
+			<!-- Maven compiler plugin -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>deb-pkg</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<configuration>
+							<tasks>
+								<echo message="Creating debian package">
+								</echo>
+								<exec dir="${basedir}/deb-package" executable="${basedir}/deb-package/build_debpkg.sh"
+									failonerror="true">
+								</exec>
+							</tasks>
+						</configuration>
+						<executions>
+							<execution>
+								<id>deb-pkg</id>
+								<phase>package</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
 </project>
