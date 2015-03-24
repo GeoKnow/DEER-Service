@@ -109,4 +109,5 @@ public class QueryChunks {
     return queryString;
 
   }
+
 }

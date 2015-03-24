@@ -1,5 +1,6 @@
 #DEER-Service
 
+
 A web service for [DEER](https://github.com/GeoKnow/DEER)
 	
 ##Build
@@ -9,8 +10,10 @@ A web service for [DEER](https://github.com/GeoKnow/DEER)
 Then, copy the war package in a Servlet container (actual code is meant to be used in Tomcat 7)
 	
 ##Configuration
+
 	
 Adapt in the web.xml a working directory :
+
 
     <!-- working directory -->
       <context-param>
@@ -20,6 +23,7 @@ Adapt in the web.xml a working directory :
       </context-param>
       
 ## REST Calls
+
 
 
 	
