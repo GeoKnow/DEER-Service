@@ -22,7 +22,7 @@ Adapt in the web.xml a working directory :
 ## REST Calls
 
 Path | Method | Description
--|-|-
+-----|-----|-----
 / | GET | Get an array of the Ids of executed processes
 /{uuid} | GET | Get the configuration file of a given process ID
 / |POST | Post a new process, will return a JSON object the location of the output
@@ -32,7 +32,7 @@ Path | Method | Description
 For executing a Deer process, the POST method has to be called with the following specs:
 
 Spec | Description
--|-
+-----|-----
 Path | /
 Method | POST
 Content-Type | text/turtle
