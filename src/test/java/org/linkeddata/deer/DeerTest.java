@@ -16,8 +16,8 @@ public class DeerTest {
   private String outputFile = "enrichedBerlin.ttl";
   private String temp_config = "";
 
-  private String endpoint = "http://192.168.2.17:8890/sparql";
-  private String graph = "http://example.com/test-rev";
+  // private String endpoint = "http://192.168.2.17:8890/sparql";
+  // private String graph = "http://example.com/test-rev";
 
   @Test
   public void loadConfig() throws Exception {
@@ -31,8 +31,8 @@ public class DeerTest {
       assertTrue(deer.getOutputFile().endsWith(outputFile));
 
       // to test that I can save to an endpoint
-      deer.setToEndpoint(endpoint);
-      deer.setToGraph(graph);
+      // deer.setToEndpoint(endpoint);
+      // deer.setToGraph(graph);
 
       deer.execute();
       outputFile = deer.getOutputFile();
@@ -41,7 +41,7 @@ public class DeerTest {
       temp_config = deer.getConfigFile();
 
       // to test that I can save to an endpoint
-      DeerImpl.saveResults(deer.getOutputFile(), deer.getToEndpoint(), deer.getToGraph());
+      // deer.saveResults(deer.getOutputFile(), deer.getToEndpoint(), deer.getToGraph());
 
     } catch (IOException e) {
       // TODO Auto-generated catch block
