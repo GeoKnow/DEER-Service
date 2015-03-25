@@ -1,7 +1,11 @@
 package org.linkeddata.deer;
 
 import static com.jayway.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.not;
 
+import java.io.File;
+
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -32,16 +36,30 @@ public class DeerServiceIT {
   @Test
   public void testPost() throws Exception {
 
-    // ClassLoader classLoader = getClass().getClassLoader();
-    // File file = new File(classLoader.getResource(configToFile).getFile());
-    // String config = FileUtils.readFileToString(file, "UTF-8");
-    // log.info(config);
-    // // creates a job
-    // log.info("post deer config: " + file.getName());
-    // log.info(given().header("Content-Type", "text/turtle").body(config).when().post().then()
-    // .extract().body().asString());
-    //
-    //
+    ClassLoader classLoader = getClass().getClassLoader();
+    File file = new File(classLoader.getResource(configToEndpoint).getFile());
+    String config = FileUtils.readFileToString(file, "UTF-8");
+
+    // creates a job
+    log.info("post deer config: " + file.getName());
+    given().header("Content-Type", "text/turtle; charset=utf-8").body(config.getBytes("UTF-8"))
+        .when().post().then().body("triples", not(0));
 
   }
+
+
+  // @Test
+  // public void testImport() throws Exception {
+  //
+  // ClassLoader classLoader = getClass().getClassLoader();
+  // File file = new File(classLoader.getResource(configToEndpoint).getFile());
+  // String config = FileUtils.readFileToString(file, "UTF-8");
+  //
+  // // creates a job
+  // // log.info("post deer config: " + file.getName());
+  // log.info(given().header("Content-Type", "text/turtle; charset=utf-8")
+  // .body(config.getBytes("UTF-8")).when().post().then().extract().body().asString());
+  //
+  // }
+
 }

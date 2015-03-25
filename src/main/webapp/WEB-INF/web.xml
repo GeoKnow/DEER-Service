@@ -13,27 +13,4 @@
     <param-value>/tmp/deer-service</param-value>
   </context-param>
   
-	<!-- Jersey rest services scanning -->
-	<servlet>
-		<servlet-name>rest</servlet-name>
-		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
-		<load-on-startup>1</load-on-startup>
-		<init-param>
-			<param-name>jersey.config.server.provider.packages</param-name>
-			<param-value>org.linkeddata.deer.rest</param-value>
-		</init-param>
-		<init-param>
-			<param-name>jersey.config.server.provider.scanning.recursive</param-name>
-			<param-value>false</param-value>
-		</init-param>
-		<init-param>
-			<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
-			<param-value>true</param-value>
-		</init-param>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>rest</servlet-name>
-		<url-pattern>/*</url-pattern>
-	</servlet-mapping>
-
 </web-app>

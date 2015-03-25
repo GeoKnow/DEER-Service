@@ -1,11 +1,9 @@
 package org.linkeddata.deer;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,17 +11,19 @@ import java.util.List;
 import java.util.UUID;
 
 import org.aksw.deer.workflow.Deer;
+import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.log4j.Logger;
 import org.linkeddata.utils.QueryChunks;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
@@ -221,60 +221,63 @@ public class DeerImpl {
    * @return false if no results were saved, and true if results were saved
    * @throws Exception
    */
-  public boolean saveResults() throws Exception {
-
-    log.debug("Saving toEndpoint: " + toEndpoint);
-    log.debug("Saving toGraph: " + toGraph);
+  public static int saveResults(String resFile, String endpoint, String graph) throws Exception {
 
     Model model = ModelFactory.createDefaultModel();
     RDFReader reader = model.getReader();
-    File file = new File(outputFile);
+    File file = new File(resFile);
 
-    log.debug("reading " + file.getAbsolutePath());
+    log.info("outputFile: " + resFile);
+    log.info("toEndpoint: " + endpoint);
+    log.info("toGraph: " + graph);
+
     reader.read(model, file.toURI().toURL().toString());
 
+    int triples = model.listStatements().toList().size();
     if (model.isEmpty() == true) {
       log.info("empty model, nothing to save ");
-      return false;
     }
 
-    QueryChunks.setLinesLimit(50);
-    List<String> insertqueries = QueryChunks.generateInsertChunks(this.toGraph, model, uriBase);
+    List<String> insertqueries = QueryChunks.generateInsertChunks(graph, model, uriBase);
     Iterator<String> it = insertqueries.iterator();
 
-    CloseableHttpClient httpClient = HttpClients.createDefault();
+    // CloseableHttpClient httpClient = HttpClients.createDefault();
+    DefaultHttpClient httpClient = new DefaultHttpClient();
 
     while (it.hasNext()) {
       String q = it.next();
 
-
-      HttpPost proxyMethod = new HttpPost(this.toEndpoint);
-      proxyMethod.addHeader(HTTP.CONTENT_TYPE, "charset=UTF-8");
+      HttpPost httpPost = new HttpPost(endpoint);
+      httpPost.addHeader(HTTP.CONTENT_TYPE, "application/x-www-form-urlencoded;charset=UTF-8");
       ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
       postParameters.add(new BasicNameValuePair("query", q));
       postParameters.add(new BasicNameValuePair("format", "application/sparql-results+json"));
-      proxyMethod.setEntity(new UrlEncodedFormEntity(postParameters));
+      httpPost.setEntity(new UrlEncodedFormEntity(postParameters, "UTF-8"));
 
-      log.debug("connecting to " + this.toEndpoint);
-      final CloseableHttpResponse response = httpClient.execute(proxyMethod);
-
-      BufferedReader in =
-          new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-      String inputLine, result = "";
-      while ((inputLine = in.readLine()) != null) {
-        result += inputLine;
-      }
-      in.close();
-
+      log.debug("connecting to " + endpoint);
+      // final CloseableHttpResponse response = httpClient.execute(proxyMethod);
+      HttpResponse response = httpClient.execute(httpPost);
+      String result = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
+      log.debug(result);
       if (response.getStatusLine().getStatusCode() != 200) {
-        throw new IOException("Could not insert data: " + toEndpoint + "\n "
-            + result.substring(0, 500) + "\n query: \n" + q);
+        throw new IOException("Could not insert data: " + endpoint + "\n query: \n" + q);
       }
 
-    }
-    httpClient.close();
-    return true;
-  }
+      // verify response
+      ObjectMapper mapper = new ObjectMapper();
+      JsonNode rootNode = mapper.readTree(result);
+      Iterator<JsonNode> bindingsIter = rootNode.path("results").path("bindings").elements();
+      if (bindingsIter.hasNext()) {
+        JsonNode bindingNode = bindingsIter.next();
+        if (!bindingNode.get("callret-0").path("value").textValue().contains("done")) {
+          throw new IOException("Could not insert data: " + endpoint + "\n query: \n" + q);
+        }
+      }
 
+      httpPost.releaseConnection();
+    }
+    // httpClient.close();
+    return triples;
+  }
 
 }

@@ -41,7 +41,7 @@ public class DeerTest {
       temp_config = deer.getConfigFile();
 
       // to test that I can save to an endpoint
-      deer.saveResults();
+      DeerImpl.saveResults(deer.getOutputFile(), deer.getToEndpoint(), deer.getToGraph());
 
     } catch (IOException e) {
       // TODO Auto-generated catch block

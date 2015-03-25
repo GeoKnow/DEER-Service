@@ -2,6 +2,7 @@ package org.linkeddata.deer.rest;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -133,7 +135,7 @@ public class DeerService {
       DeerImpl deer = new DeerImpl(configuration, resultDir.getAbsolutePath());
       deer.execute();
 
-      Map<String, String> map = new HashMap<String, String>();
+      Map<String, Object> map = new HashMap<String, Object>();
 
       map.put("outputFile", deer.getOutputFile());
       map.put("withId", deer.getWithId());
@@ -141,13 +143,12 @@ public class DeerService {
       // insert results to an endpoint
       if (!deer.getToEndpoint().equals("")) {
         try {
-          if (deer.saveResults()) {
-            // give back endpoint and graph if results were saved.
-            map.put("outputEndpoint", deer.getToEndpoint());
-            map.put("outputGraph", deer.getToGraph());
-            // delete the file
-            (new File(deer.getOutputFile())).delete();
-          }
+          int triples =
+              DeerImpl.saveResults(deer.getOutputFile(), deer.getToEndpoint(), deer.getToGraph());
+          // give back endpoint and graph if results were saved.
+          map.put("outputEndpoint", deer.getToEndpoint());
+          map.put("outputGraph", deer.getToGraph());
+          map.put("triples", triples);
         } catch (Exception e) {
           // TODO Auto-generated catch block
           log.error(e);
@@ -184,4 +185,58 @@ public class DeerService {
 
   }
 
+  @POST
+  @Path("{uuid}/import")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response importResults(@PathParam("uuid") String uuid,
+      @QueryParam("endpoint") String endpoint, @QueryParam("graph") String graph,
+      @Context ServletContext context) {
+
+    String workingPath = getWorkingDir(context).getAbsolutePath();
+
+    Map<String, Object> map = new HashMap<String, Object>();
+
+    String outputFile = workingPath + File.separator + uuid + "_output.ttl";
+    log.debug(outputFile);
+
+    File f = new File(outputFile);
+    if (!f.exists())
+      return Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*")
+          .header("Access-Control-Allow-Methods", "GET").build();
+
+    if (endpoint == null)
+      return Response.status(HttpURLConnection.HTTP_BAD_REQUEST)
+          .entity("endpoint parameter is mandatory").build();
+
+    if (graph == null)
+      return Response.status(HttpURLConnection.HTTP_BAD_REQUEST)
+          .entity("endpoint parameter is mandatory").build();
+
+    try {
+
+      int triples = DeerImpl.saveResults(outputFile, endpoint, graph);
+      // give back endpoint and graph if results were saved.
+      map.put("triples", triples);
+
+      // output resulting file/endpoint/graph
+      Gson gson = new Gson();
+      String json = gson.toJson(map);
+
+      return Response.ok().header("Access-Control-Allow-Origin", "*")
+          .header("Access-Control-Allow-Methods", "POST").type(MediaType.APPLICATION_JSON)
+          .entity(json).build();
+
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      log.error(e);
+      e.printStackTrace();
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+          .type(MediaType.APPLICATION_JSON).entity(e.getMessage())
+          .header("Access-Control-Allow-Origin", "*")
+          .header("Access-Control-Allow-Methods", "POST").build();
+    }
+
+
+
+  }
 }
