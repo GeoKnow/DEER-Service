@@ -1,5 +1,5 @@
 #!/bin/sh
-# postinst script for geolift-service
+# postinst script for deer-service
 #
 # see: dh_installdeb(1)
 

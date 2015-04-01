@@ -1,5 +1,5 @@
 #!/bin/sh
-# prerm script for geolift-service
+# prerm script for deer-service
 #
 # see: dh_installdeb(1)
 

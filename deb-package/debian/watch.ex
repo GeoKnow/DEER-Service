@@ -8,16 +8,16 @@ version=3
 
 # Uncomment to examine a Webpage
 # <Webpage URL> <string match>
-#http://www.example.com/downloads.php geolift-service-(.*)\.tar\.gz
+#http://www.example.com/downloads.php deer-service-(.*)\.tar\.gz
 
 # Uncomment to examine a Webserver directory
-#http://www.example.com/pub/geolift-service-(.*)\.tar\.gz
+#http://www.example.com/pub/deer-service-(.*)\.tar\.gz
 
 # Uncommment to examine a FTP server
-#ftp://ftp.example.com/pub/geolift-service-(.*)\.tar\.gz debian uupdate
+#ftp://ftp.example.com/pub/deer-service-(.*)\.tar\.gz debian uupdate
 
 # Uncomment to find new files on sourceforge, for devscripts >= 2.9
-# http://sf.net/geolift-service/geolift-service-(.*)\.tar\.gz
+# http://sf.net/deer-service/deer-service-(.*)\.tar\.gz
 
 # Uncomment to find new files on GooglePages
-# http://example.googlepages.com/foo.html geolift-service-(.*)\.tar\.gz
+# http://example.googlepages.com/foo.html deer-service-(.*)\.tar\.gz

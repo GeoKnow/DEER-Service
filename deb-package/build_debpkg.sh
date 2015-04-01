@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MODULE_NAME=geolift-service_0.1
+MODULE_NAME=deer-service_0.1
 
 echo "Building Debian package for ${MODULE_NAME}"
 rm -rf ../target/debian

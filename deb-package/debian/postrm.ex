@@ -1,5 +1,5 @@
 #!/bin/sh
-# postrm script for geolift-service
+# postrm script for deer-service
 #
 # see: dh_installdeb(1)
 

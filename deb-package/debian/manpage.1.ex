@@ -1,10 +1,10 @@
 .\"                                      Hey, EMACS: -*- nroff -*-
-.\" (C) Copyright 2013 Vadim Zaslawski <vadim.zaslawski@ontos.com>,
+.\" (C) Copyright 2015 Alejandra Garcia-Rojas M <alejandra.garciarojas@ontos.com>,
 .\"
 .\" First parameter, NAME, should be all caps
 .\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
 .\" other parameters are allowed: see man(7), man(1)
-.TH geolift-service SECTION "August 21, 2013"
+.TH DEER-SERVICE SECTION "April  1, 2015"
 .\" Please adjust this date whenever revising the manpage.
 .\"
 .\" Some roff macros, for reference:
@@ -18,16 +18,16 @@
 .\" .sp <n>    insert n+1 empty lines
 .\" for manpage-specific macros, see man(7)
 .SH NAME
-geolift-service \- program to do something
+deer-service \- program to do something
 .SH SYNOPSIS
-.B geolift-service
+.B deer-service
 .RI [ options ] " files" ...
 .br
 .B bar
 .RI [ options ] " files" ...
 .SH DESCRIPTION
 This manual page documents briefly the
-.B geolift-service
+.B deer-service
 and
 .B bar
 commands.
@@ -35,7 +35,7 @@ commands.
 .\" TeX users may be more comfortable with the \fB<whatever>\fP and
 .\" \fI<whatever>\fP escape sequences to invode bold face and italics,
 .\" respectively.
-\fBgeolift-service\fP is a program that...
+\fBdeer-service\fP is a program that...
 .SH OPTIONS
 These programs follow the usual GNU command line syntax, with long
 options starting with two dashes (`-').
